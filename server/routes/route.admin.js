@@ -2,31 +2,31 @@ var express = require("express");
 var router = express.Router();
 const Users = require("../models/model.user");
 const Companies = require("../models/model.company");
-const { authorize, AUTH_ROLES } = require("../middlewares/auth");
+const { authorizeAdmin, AUTH_ROLES } = require("../middleware/auth");
 const { COMPANY } = AUTH_ROLES;
 const {
+  verifyCompany,
+  unverifyCompany,
   blockUser,
   unblockUser,
-  verfieCompany,
-  unverfieCompany,
-  getBlokcedUser,
+  getBlockedUser,
 } = require("../controller/controller.admin");
-const { verifyDoc } = require("../middlewares/verfieDocument");
+const { verifyDoc } = require("../middleware/verfieDocument");
 /* GET users listing. */
-router.get("/blocked", authorize(COMPANY), getBlokcedUser);
-router.put("/block/:id", authorize(COMPANY), verifyDoc(Users), blockUser);
-router.put("/unblock/:id", authorize(COMPANY), verifyDoc(Users), unblockUser);
+router.get("/blocked", authorizeAdmin, getBlockedUser);
+router.put("/block/:id", authorizeAdmin, verifyDoc(Users), blockUser);
+router.put("/unblock/:id", authorizeAdmin, verifyDoc(Users), unblockUser);
 router.put(
-  "/company/verfiy/:id/",
-  authorize(COMPANY),
+  "/company/verify/:id/",
+  authorizeAdmin,
   verifyDoc(Companies),
-  verfieCompany
+  verifyCompany
 );
 router.put(
-  "/company/unverfiy/:id/",
-  authorize(COMPANY),
+  "/company/unverify/:id/",
+  authorizeAdmin,
   verifyDoc(Companies),
-  unverfieCompany
+  unverifyCompany
 );
 
 module.exports = router;

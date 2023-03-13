@@ -7,10 +7,9 @@ const companySchema = new Schema(
     name: { type: String, required: true, maxLength: 255, trim: true },
     category: {
       type: String,
-      required: true,
       enum: ["mega", "pe", "pme", "ge"],
     },
-    fields: { type: [String], required: true },
+    fields: { type: [String] },
     contacts: {
       type: [
         {
@@ -21,7 +20,7 @@ const companySchema = new Schema(
     },
     password: { required: true, type: String, minLength: 8, maxLength: 1024 },
     email: { required: true, type: String, unique: true },
-    country: { type: String, required: true },
+    country: { type: String },
     coverPhoto: { type: String },
     logo: { type: String },
     websiteUrl: { type: String },

@@ -1,28 +1,9 @@
 const Users = require("../models/model.user");
-const nameMatch = require("../utils/nameMatch");
-const userDetails = {
-  fullName: 1,
-  firstName: 1,
-  lastName: 1,
-  field: 1,
-  nbrFriend: 1,
-};
-const ownerDetails = {
-  firstName: 1,
-  lastName: 1,
-  picture: 1,
-  logo: 1,
-  name: 1,
-  verified: 1,
-  followers: 1,
-
-  invitations: 1,
-};
 const updatePassword = async (req, res) => {
   try {
     const user = await Users.findById(req.user._id);
     const match = await user.matchPassword(req.body.password);
-    if (!match) return res.status(400).json({ error: "worng password" });
+    if (!match) return res.status(400).json({ error: "wrong password" });
     user.password = req.body.newPassword;
     await user.save();
     return res.status(200).json("password updated");
